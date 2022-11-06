@@ -1,107 +1,137 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
-  <head>
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/LordGnomeMBE/PhotoGrid/main/PhotoGridFavicon.png">
     <title>PhotoGrid by Lord Gnome | View photos in a grid pattern!</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <style>
-   a:visited {color: #ff4b4b;}
-   a:hover {color: #ff4b4b;}
+<style>
       p3 {
         font-size: 60px;
+    font-family: "Times New Roman", Times, serif;
       }
-.red{ background-color: transparent;width: 150px;height: 150px;float: left;border: 2px solid black;padding: 5px;margin: 10px; }
-.green{ background-color: transparent;width: 150px;height: 150px;float: left;border: 2px solid transparent;padding: 5px;margin: 10px; }
-
-      #selectedFiles img {
-        max-width: 150px;
-        max-height: 150px;
-        float: left;
-        margin-bottom: 10px;
-      }
-
-      .center {
-        margin: auto;
-        width: 90%;
-        padding: 10px;
-      }
-.dark-mode {
-  background-color: #1b1b1b;
-  color: white;
+.imgarea {
+  margin-top: 4%;
+  margin-bottom: 4%;
+  margin-left: 8%;
+  margin-right: 8%;
+}
+.toptextarea {
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-    </style>
-  </head>
-<button onclick="myFunction()">Toggle dark mode</button>
-  <body>
-    <center>
+.drop-area{
+  width:70%;
+  height:50px;
+  border: 2px solid black;
+text-align: center;
+vertical-align: middle;
+line-height: 50px;
+padding:10px;
+  cursor:pointer;
+}
+#thumbnail img{
+  width:100px;
+  height:100px;
+  margin:5px;
+  float:left;
+}
+canvas{
+  border:1px solid red;
+}
+</style>
+<body>
+<center>
       <p3><img src="https://raw.githubusercontent.com/LordGnomeMBE/PhotoGrid/main/PhotoGridFavicon_White.png" height="50px" width="50px" style="float:center"> <b>Photo</b>Grid</p3></br>
       <sup style="font-size:20px">By <a href="https://github.com/LordGnomeMBE" style="text-decoration:underline">LordGnomeMBE</a></sup>
-      <p style="padding:10px">I found that when I wanted to simply put photos in a grid pattern, all I could find was paid sites, or sites with lots of extraneous rubbish, so I created PhotoGrid to provide a simple, clean, ad-free way to arrange photos in a grid.</p>
-      <p>Unfortunately, due to current limitations, you must upload all the files you want at once (put them in one folder for this to be easy) and you must upload them in the order you want them to display. Screenshot this page to save your photos as a grid. More features are planned for the future. Upload some files to get started.</p>
-      </br>
-    </center>
-    <center>
+      </center>
+      <div class="toptextarea">
+      <center>
+      <p>I found that when I wanted to simply put photos in a grid pattern, all I could find was paid sites, or sites with lots of extraneous rubbish, so I created PhotoGrid to provide a simple, clean, ad-free way to arrange photos in a grid.</p>
+            <p>You must upload the images in the order you want them to appear. Screenshot the page to save the grid. More features are planned for the future.</p>
 
-      <div id="myForm"></div>
-      <form id="myForm" method="post" enctype="multipart/form-data">
+      </center>
+      </p>
+<center>
+<input type="file" style="display:none" id="upload-image" multiple="multiple" accept="image/*"></input>
+<div id="upload" class="drop-area">
+   Drop some images here or <u>upload some files</u>
+</div>
+</center>
+<div class="imgarea">
+<div id="thumbnail"></div></body>
+</div>
+<script>
 
-        <input type="file" id="files" name="files" multiple accept="image/*"> <!--<input type="submit" value="Upload"><br /></br>
-<button>Toggle Grid Border</button>-->
 
-        <div class="center">
+jQuery(function($) {
+  var fileDiv = document.getElementById("upload");
+  var fileInput = document.getElementById("upload-image");
+  console.log(fileInput);
+  fileInput.addEventListener("change", function(e) {
+    var files = this.files
+    showThumbnail(files)
+  }, false)
 
-          <span id="selectedFiles"></span>
-        </div>
-    </center>
-    </form>
-    <script>
-      var selDiv = "";
+  fileDiv.addEventListener("click", function(e) {
+    $(fileInput).show().focus().click().hide();
+    e.preventDefault();
+  }, false)
 
-      document.addEventListener("DOMContentLoaded", init, false);
+  fileDiv.addEventListener("dragenter", function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }, false);
 
-      function init() {
-        document.querySelector('#files').addEventListener('change', handleFileSelect, false);
-        selDiv = document.querySelector("#selectedFiles");
+  fileDiv.addEventListener("dragover", function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }, false);
+
+  fileDiv.addEventListener("drop", function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    var dt = e.dataTransfer;
+    var files = dt.files;
+
+    showThumbnail(files)
+  }, false);
+
+  function showThumbnail(files) {
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i]
+      var imageType = /image.*/
+      if (!file.type.match(imageType)) {
+        console.log("Not an Image");
+        continue;
       }
 
-      function handleFileSelect(e) {
+      var image = document.createElement("img");
+      // image.classList.add("")
+      var thumbnail = document.getElementById("thumbnail");
+      image.file = file;
+      thumbnail.appendChild(image)
 
-        if (!e.target.files || !window.FileReader) return;
-
-        selDiv.innerHTML = "";
-
-        var files = e.target.files;
-        var filesArr = Array.prototype.slice.call(files);
-        filesArr.forEach(function(f) {
-          if (!f.type.match("image.*")) {
-            return;
-          }
-
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            var html = "<div class='toggle red'><img src=\"" + e.target.result + "\">" + "<br clear=\"left\"/></div>";
-            selDiv.innerHTML += html;
-          }
-          reader.readAsDataURL(f);
-
-        });
-
-
+      var reader = new FileReader()
+      reader.onload = (function(aImg) {
+        return function(e) {
+          aImg.src = e.target.result;
+        };
+      }(image))
+      var ret = reader.readAsDataURL(file);
+      var canvas = document.createElement("canvas");
+      ctx = canvas.getContext("2d");
+      image.onload = function() {
+        ctx.drawImage(image, 100, 100)
       }
-function myFunction() {
-   var element = document.body;
-   element.classList.toggle("dark-mode");
-}
-$('button').click(function(){
-  $('.toggle').toggleClass('red green');
+    }
+  }
 });
 
-    </script>
-
-  </body>
-
+</script>
 </html>
