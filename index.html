@@ -7,6 +7,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
+.top-banner {
+text-align:center;
+  width: 100%;
+  padding: 5px 0;
+  text-decoration: none;
+  color: white;
+  background-color: black;
+}
+
       p3 {
         font-size: 60px;
     font-family: "Times New Roman", Times, serif;
@@ -62,9 +71,23 @@ canvas{
   padding:30px;
   background-color:white;
 }
+.top-banner2 {
+text-align:center;
+  width: 100%;
+  padding: 5px 0;
+  text-decoration: none;
+  color: white;
+  background-color: #F4C430;
+}
 </style>
 <body>
+<div class="top-banner">
+  <span id="visitors"></span> // View Source <a href="https://github.com/LordGnomeMBE/PhotoGrid"style="color:white">on GitHub</a> // visit my <a href="https://lordgnomembe.github.io"style="color:white">GnomePage </a></div>
+  <div class="top-banner2">
+  <span id="visitors"></span><b>New!</b></a> view Grid in fullscreen to screenshot more easily </div>
+
 <center>
+</br>
       <p3><img src="https://raw.githubusercontent.com/LordGnomeMBE/PhotoGrid/main/PhotoGridFavicon_White.png" height="50px" width="50px" style="float:center"> <b>Photo</b>Grid</p3></br>
       <sup style="font-size:20px">By <a href="https://github.com/LordGnomeMBE" style="text-decoration:underline">LordGnomeMBE</a></sup>
       </center>
@@ -188,5 +211,11 @@ $('#toggle_fullscreen').on('click', function(){
     }
   }
 });
+</script>
+<script>
+var visitors = localStorage.getItem('visitors') || 0;
+localStorage.setItem('visitors', parseInt(visitors)+1);
+
+ document.getElementById("visitors").innerHTML = "You are visitor No. " + visitors;
 </script>
 </html>
