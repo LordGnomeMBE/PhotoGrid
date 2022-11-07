@@ -4,6 +4,8 @@
     <title>PhotoGrid by Lord Gnome | View photos in a grid pattern!</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
       p3 {
         font-size: 60px;
@@ -14,6 +16,7 @@
   margin-bottom: 4%;
   margin-left: 8%;
   margin-right: 8%;
+  float:center;
 }
 .toptextarea {
   margin-left: 5%;
@@ -23,7 +26,16 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
-
+.buttonFullScreen {
+color:black;
+font-size:13px;
+border: 2px solid grey;
+background-color:lightgrey;
+padding:8px;
+padding-left:12px;
+padding-right:12px;
+border-radius: 20px;
+}
 .drop-area{
   width:70%;
   height:50px;
@@ -39,10 +51,16 @@ padding:10px;
   height:150px;
   object-fit: cover;
   margin:5px;
-  float:left;
+  float:center;
 }
 canvas{
   border:1px solid red;
+}
+#container{
+  border:3px solid white;
+  border-radius: .5em;
+  padding:30px;
+  background-color:white;
 }
 </style>
 <body>
@@ -64,7 +82,10 @@ canvas{
 </div>
 </center>
 <div class="imgarea">
+<center><a href="#" id="toggle_fullscreen"><button class="buttonFullScreen"> <i class="fa fa-expand"></i> View Grid in Fullscreen </button></a></center></br>
+<div id="container">
 <div id="thumbnail"></div></body>
+</div>
 </div>
 <script>
 
@@ -134,5 +155,38 @@ jQuery(function($) {
   }
 });
 
+</script>
+<script>
+$('#toggle_fullscreen').on('click', function(){
+  // if already full screen; exit
+  // else go fullscreen
+  if (
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullScreenElement ||
+    document.msFullscreenElement
+  ) {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  } else {
+    element = $('#container').get(0);
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    }
+  }
+});
 </script>
 </html>
