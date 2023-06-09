@@ -7,6 +7,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
 .top-banner {
 text-align:center;
   width: 100%;
@@ -81,31 +89,34 @@ text-align:center;
 }
 </style>
 <body>
+<div class='no-print'>
 <div class="top-banner">
-  <span id="visitors"></span> // View Source <a href="https://github.com/LordGnomeMBE/PhotoGrid"style="color:white">on GitHub</a> // visit my <a href="https://lordgnomembe.github.io"style="color:white">GnomePage </a></div>
+  <span id="visitors"></span> // View Source <a href="https://github.com/LordGnomeMBE/PhotoGrid"style="color:white">on GitHub</a> <!---// visit my <a href="https://lordgnomembe.github.io"style="color:white">GnomePage </a>---></div>
   <div class="top-banner2">
   <span id="visitors"></span><b>New!</b></a> view Grid in fullscreen to screenshot more easily </div>
-
+</div>
 <center>
 </br>
-      <p3><img src="https://raw.githubusercontent.com/LordGnomeMBE/PhotoGrid/main/PhotoGridFavicon_White.png" height="50px" width="50px" style="float:center"> <b>Photo</b>Grid</p3></br>
-      <sup style="font-size:20px">By <a href="https://github.com/LordGnomeMBE" style="text-decoration:underline">LordGnomeMBE</a></sup>
+      <div class='no-print'><p3><img src="https://raw.githubusercontent.com/LordGnomeMBE/PhotoGrid/main/PhotoGridFavicon_White.png" height="50px" width="50px" style="float:center"> <b>Photo</b>Grid</p3></br>
+      <sup style="font-size:20px">By <a href="https://github.com/LordGnomeMBE" style="text-decoration:underline">LordGnomeMBE</a></sup></div>
       </center>
       <div class="toptextarea">
       <center>
+      <div class='no-print'>
       <p>I found that when I wanted to simply put photos in a grid pattern, all I could find was paid sites, or sites with lots of extraneous rubbish, so I created PhotoGrid to provide a simple, clean, ad-free way to arrange photos in a grid.</p>
             <p>You must upload the images in the order you want them to appear. Screenshot the page to save the grid. More features are planned for the future.</p>
-
+</div>
       </center>
       </p>
 <center>
-<input type="file" style="display:none" id="upload-image" multiple="multiple" accept="image/*"></input>
+<div class='no-print'><input type="file" style="display:none" id="upload-image" multiple="multiple" accept="image/*"></input>
 <div id="upload" class="drop-area">
    Drop some images here or <u>upload some files</u>
 </div>
+</div>
 </center>
 <div class="imgarea">
-<center><a href="#" id="toggle_fullscreen"><button class="buttonFullScreen"> <i class="fa fa-expand"></i> View Grid in Fullscreen </button></a></center></br>
+<center><div class='no-print'><a href="#" id="toggle_fullscreen"><button class="buttonFullScreen"> <i class="fa fa-expand"></i> View Grid in Fullscreen </button></a></div></center></br>
 <div id="container">
 <div id="thumbnail"></div></body>
 </div>
@@ -216,6 +227,6 @@ $('#toggle_fullscreen').on('click', function(){
 var visitors = localStorage.getItem('visitors') || 0;
 localStorage.setItem('visitors', parseInt(visitors)+1);
 
- document.getElementById("visitors").innerHTML = "You are visitor No. " + visitors;
+ document.getElementById("visitors").innerHTML = "You've visited this site " + visitors + " times. Thank You!";
 </script>
 </html>
