@@ -102,11 +102,13 @@ text-align:center;
       </center>
       <div class="toptextarea">
       <center>
+      </br>
       <div class='no-print'>
       <p id="testpara">Use this tool to arrange your photos in a grid of squares. It will automatically trim each image to make it square if it is not already.</p>
             <p>You must upload the images in the order you want them to appear. Screenshot the page to save the grid; you may add a maximum of 66 photos. <button onclick="window.print()">Print grid</button> or press Ctrl+P; adjust the scale in the print dialogue to determine the size of printed images. <button onClick="window.location.reload();">Clear Grid</button> or press Ctrl+R. If you want to print without the outer border, <button onclick="printClick()">Open Simple View</button>.</p>
 </div>
       </center>
+      </br>
       </p>
 <center>
 <div class='no-print'><input type="file" style="display:none" id="upload-image" multiple="multiple" accept="image/*"></input>
@@ -236,7 +238,7 @@ function printClick() {
   var html = $("#container").html();
 
   // how do I write the html to the new window with JQuery?
-    $(w.document.body).html("<style>#thumbnail img {width:150px; height:150px; object-fit: cover; margin:5px; float:center;}@media print {body {visibility: hidden;}#ContentToPrint {visibility: visible; position: absolute; left: 0; top: 0;}}</style>Close this tab and return to PhotoGrid to add photos. Use your <u>browser controls</u> to increase or decrease the image size for screenshotting, or use <u>print scale</u> when printing. This text will not appear when you press print.<div id='ContentToPrint'>" + html + "</div>");
+    $(w.document.body).html("<link rel='icon' type='image/x-icon' href='https://raw.githubusercontent.com/LordGnomeMBE/PhotoGrid/main/PhotoGridFavicon.png'><title>PhotoGrid Simple View</title><style>#thumbnail img {width:150px; height:150px; object-fit: cover; margin:5px; float:center;}@media print {body {visibility: hidden;}#ContentToPrint {visibility: visible; position: absolute; left: 0; top: 0;}}</style>Close this tab and return to PhotoGrid to add photos. Use your <u>browser controls</u> to increase or decrease the image size for screenshotting, or use <u>print scale</u> when printing. This text will not appear when you press print.<div id='ContentToPrint'>" + html + "</div>");
 }
 
 $(function() {
